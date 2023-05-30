@@ -13,10 +13,20 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class Pedido {
+    private static int cont = 0;
     private int id;
     private long idUsuario;
     private ArrayList<Produto> produtos;
     private double total;
+
+    public Pedido(long idUsuario, ArrayList<Produto> produtos,double total) {
+        this.idUsuario = idUsuario;
+        this.produtos = produtos;
+        this.cont = 0;
+        this.total = total;
+        cont++;
+
+    }
 
     private String printaProdutos(){
         String listString = getProdutos().stream().map(Object::toString)
@@ -24,13 +34,15 @@ public class Pedido {
         return listString;
     }
 
+
+
     @Override
     public String toString() {
         return "----------------------------------" + "\n" +"Pedido:" + "\n" +
-                "Id:" + id + "\n" +
-                "IdUsuario" + idUsuario + "\n" +
-                "Produtos:" + printaProdutos() + "\n" +
-                "Total=" + total + "\n" +
+                "Id: " + id + "\n" +
+                "IdUsuario: " + idUsuario + "\n" +
+                "Produtos :" + printaProdutos() + "\n" +
+                "Total= " + total + "\n" +
                 "----------------------------------";
     }
 }

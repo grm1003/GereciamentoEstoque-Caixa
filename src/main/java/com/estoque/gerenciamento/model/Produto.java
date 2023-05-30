@@ -20,6 +20,11 @@ public class Produto {
     private int quantStock;
     private int custoProd;
 
+    public Produto(long id, int quantStock) {
+        this.id = id;
+        this.quantStock = quantStock;
+    }
+
     public Produto(String nome, String descricao, float preco_unitario, int quantStock, int custoProd) {
         this.id = cont;
         this.nome = nome;
@@ -30,8 +35,10 @@ public class Produto {
         cont++;
     }
 
-    @Override
-    public String toString() {
+
+
+
+   /* public String toString() {
         return "Produto:" +
                 "Id:" + id +
                 ", nome='" + nome + '\'' +
@@ -39,6 +46,18 @@ public class Produto {
                 ", preco_unitario=" + preco_unitario +
                 ", quantStock=" + quantStock +
                 ", custoProd=" + custoProd +
+                '}' + "\n";
+    }
+
+    */
+
+    @Override
+    public String MostraCliente() {
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", preco_unitario=" + preco_unitario +
+                ", quantStock=" + quantStock +
                 '}';
     }
 }

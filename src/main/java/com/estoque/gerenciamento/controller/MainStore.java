@@ -1,5 +1,6 @@
 package com.estoque.gerenciamento.controller;
 
+import com.estoque.gerenciamento.model.Pedido;
 import com.estoque.gerenciamento.model.Produto;
 import com.estoque.gerenciamento.model.Token;
 import com.estoque.gerenciamento.model.Usuario;
@@ -24,12 +25,15 @@ public class MainStore {
         loja.auth.setUsuarioHashMap(UserHashmap);
         loja.produtos = new ArrayList<>();
         loja.pedidos = new ArrayList<>();
+        ArrayList<Produto>myproducts = new ArrayList<>();
         //adm padrão
         loja.auth.cadastraAdm("gui", "123");
+        loja.auth.cadastraUsuario("gui1", "123");
         //cadastrandos os produtos
-        loja.produtos.add(0, new Produto(1, "Bola", "Feito para jogar futebol", 47, 15, 30));
-        loja.produtos.add(1, new Produto(2, "Relogio Curren", "Melhor Relogio Masculino", 104, 10, 55));
-        loja.produtos.add(2, new Produto(3, "Soja", "Graos de Soja da Melhor Qualidade", 45, 80, 27));
+        loja.produtos.add(0, new Produto(0, "Bola", "Feito para jogar futebol", 47, 15, 30));
+        loja.produtos.add(1, new Produto(1, "Relogio Curren", "Melhor Relogio Masculino", 104, 10, 55));
+        loja.produtos.add(2, new Produto(2, "Soja", "Graos de Soja da Melhor Qualidade", 45, 80, 27));
+        
 
         while (option != 3) {
             System.out.println("Digite Uma das Opcoes Abaixo: ");
@@ -66,6 +70,40 @@ public class MainStore {
                                 System.out.println(prod);
 
                             }
+                            break;
+
+                        case 2 :
+                            for (Produto prod: loja.produtos) {
+                                System.out.println(prod);
+
+                            }
+
+
+                            while (true){
+
+                                System.out.println("Digite o id do Produto");
+                                int id = sc.nextInt();
+                                System.out.println("Digite a Quantidade:");
+                                int quant= scanner.nextInt();
+                                loja.makeOrder(id,quant,myproducts);
+                                System.out.println(myproducts);
+                                int choose = 0;
+                               
+                                System.out.println("1 - Continuar Comprando");
+                                System.out.println("2 - Finalizar Pedido");
+                                 choose = scanner.nextInt();
+
+                                 switch (choose){
+                                     case 2:
+
+                                         loja.pedidos.add(new Pedido(UserHashmap.get(email).getId(),myproducts,loja.calculaTotal(myproducts)));
+                                         System.out.println(loja.pedidos);
+
+                                 }
+
+                                 if (choose == 6)break;
+
+                            }
                     }
 
                     break;
@@ -86,6 +124,11 @@ public class MainStore {
                         } catch (Exception e) {
                             System.out.println("Erro login");
                         }
+
+
+                        System.out.println("1 - Painel Adm");
+                        System.out.println("2 - Realizar Pedido");
+                        System.out.println("3 - Mostrar Produtos");
                     }
 
 
