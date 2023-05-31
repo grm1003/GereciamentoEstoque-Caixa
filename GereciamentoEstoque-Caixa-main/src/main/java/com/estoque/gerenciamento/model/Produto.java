@@ -12,33 +12,32 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Produto {
-    static long cont = 0;
-    private long id;
+    static int cont = 0;
+    private int id;
     private String nome;
     private String descricao;
-    private float preco_unitario;
+    private double preco_unitario;
     private int quantStock;
-    private int custoProd;
+    private double custoProd;
 
-    public Produto(long id, int quantStock) {
+    public Produto(int id, int quantStock) {
         this.id = id;
         this.quantStock = quantStock;
     }
 
-    public Produto(String nome, String descricao, float preco_unitario, int quantStock, int custoProd) {
+    public Produto(String nome, String descricao, double preco_unitario, int quantStock, double custoProd) {
         this.id = cont;
         this.nome = nome;
         this.descricao = descricao;
-        this.preco_unitario = preco_unitario;
-        this.quantStock = quantStock;
-        this.custoProd = custoProd;
+        if(preco_unitario>=0)this.preco_unitario = preco_unitario; else throw new IllegalArgumentException("Atributo deve ser maior ou igual que 0");
+        if(quantStock>=0)this.quantStock = quantStock; else throw new IllegalArgumentException("Atributo deve ser maior ou igual que 0");
+        if(custoProd>=0)this.custoProd = custoProd; else throw new IllegalArgumentException("Atributo deve ser maior ou igual que 0");
         cont++;
     }
 
 
 
-
-   public String toString() {
+    public String toString() {
         return "Produto:" +
                 "Id:" + id +
                 ", nome='" + nome + '\'' +

@@ -2,12 +2,14 @@ package com.estoque.gerenciamento.service;
 
 import com.estoque.gerenciamento.model.Pedido;
 import com.estoque.gerenciamento.model.Produto;
+import com.estoque.gerenciamento.model.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 
 @NoArgsConstructor
 @Getter
@@ -16,20 +18,26 @@ public class Loja {
     public ArrayList<Produto> produtos;
     public ArrayList<Pedido>pedidos;
 
-    public HashMap<Long,Produto> produtoHashMap;
-    public HashMap<Long,Pedido> pedidoHashMap;
     public Authorization auth;
-    static int cont = 0;
+   ;
 
 
     public void makeOrder(int id, int quant, ArrayList<Produto> a){
-
-       a.add(produtos.get(id));
-       a.get(cont).setQuantStock(quant);
-       cont++;
-
-
+        Produto b = produtos.get(id);
+        Produto c = new Produto((int) b.getId(),b.getNome(),b.getDescricao(),b.getPreco_unitario(),quant, b.getCustoProd());
+        a.add(c);
     }
+
+    public void updateStock(ArrayList<Produto> a) throws Exception{
+        for (Produto d:a){
+            Produto b  = produtos.get((int) d.getId());
+           if(b.getQuantStock()-d.getQuantStock()>=0)b.setQuantStock((b.getQuantStock()-d.getQuantStock()));
+           else throw new IllegalArgumentException("Produto no estoque insuficiente");
+        }
+    }
+
+
+
 
     public Double calculaTotal(ArrayList<Produto> x){
         Iterator<Produto> it = x.iterator();
@@ -40,6 +48,7 @@ public class Loja {
         }
         return total;
     }
+
 
     public Double calculaCusto(ArrayList<Produto> x){
         Iterator<Produto> it = x.iterator();
@@ -75,7 +84,7 @@ public class Loja {
                 "Faturamento: " + Faturamento + "\n" +
                 "Custo: " + Custo_Vendidos  + "\n" +
                 "Lucro:" + Lucro + "\n" +
-                "-----------------------FUTURO------------------------" +
+                "-----------------------FUTURO------------------------" + "\n" +
                 "Potencial de Vendas Futuras: " + "\n" +
                 "Faturamento: " + Faturamento_Potencial + "\n" +
                 "Custo: " + Custo_Total  + "\n" +
@@ -83,6 +92,14 @@ public class Loja {
                 "-----------------------FIM DE FLUXO---------------------------------";
     }
 
+
+    public void attEstoque(ArrayList<Produto> produtos1){
+        for(Produto produto: produtos1){
+            Produto novo = new Produto(produto.getId(),produto.getQuantStock());
+            int quant = produtos.get(produto.getId()).getQuantStock();
+            produtos.get(produto.getId()).setQuantStock(quant += produto.getQuantStock() );
+        }
+    }
 
 
 }
