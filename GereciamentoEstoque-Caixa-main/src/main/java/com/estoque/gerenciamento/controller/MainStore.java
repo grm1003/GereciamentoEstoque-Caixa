@@ -154,6 +154,7 @@ public class MainStore {
                                     System.out.println("4 - Relatorio de Vendas");
                                     System.out.println("5 - Cadastrar Produtos");
                                     System.out.println("6 - Adicionar Estoque");
+                                    System.out.println("7 - Mostrar Pedidos");
 
                                     option =scanner.nextInt();
                                     switch (option){
@@ -256,6 +257,10 @@ public class MainStore {
 
 
                                             }
+                                case 7:
+                                    for(Pedido a: loja.pedidos){
+                                        System.out.println(a.toString());
+                                    }
                             }
 
 
